@@ -7,6 +7,9 @@ from algorithms.bfs_type1 import BFSType1
 from algorithms.bfs_type2 import BFSType2
 from algorithms.dfs_type1 import DFSType1
 from algorithms.dfs_type2 import DFSType2
+from algorithms.ids_type1 import IDSType1
+from algorithms.ids_type2 import IDSType2
+from algorithms.ucs import UCS
 
 class VacuumApp:
     def __init__(self, root):
@@ -52,6 +55,9 @@ class VacuumApp:
             anchor=tk.W)
         tk.Radiobutton(self.frame_left, text="DFS Type 2", variable=self.algo_var, value="DFS_T2", bg="#f0f0f0").pack(
             anchor=tk.W)
+        tk.Radiobutton(self.frame_left, text="IDS Type 1", variable=self.algo_var, value="IDS_T1", bg="#f0f0f0").pack(anchor=tk.W)
+        tk.Radiobutton(self.frame_left, text="IDS Type 2", variable=self.algo_var, value="IDS_T2", bg="#f0f0f0").pack(anchor=tk.W)
+        tk.Radiobutton(self.frame_left, text="UCS (Uniform Cost)", variable=self.algo_var, value="UCS", bg="#f0f0f0").pack(anchor=tk.W)
         # KHU VỰC CÁC NÚT ĐIỀU KHIỂN
         tk.Button(self.frame_left, text="Start / Reset", command=self.start_search, width=15, bg="#4CAF50",
                   fg="white").pack(pady=(20, 5))
@@ -234,6 +240,12 @@ class VacuumApp:
             algo = DFSType1(self.rows, self.cols, self.obstacles)
         elif algo_choice == "DFS_T2":
             algo = DFSType2(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "IDS_T1":
+            algo = IDSType1(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "IDS_T2":
+            algo = IDSType2(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "UCS":
+            algo = UCS(self.rows, self.cols, self.obstacles)
         self.search_generator = algo.search(initial_state)
 
     def toggle_auto_run(self):
