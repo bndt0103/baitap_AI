@@ -61,6 +61,7 @@ Hệ thống hỗ trợ 9 biến thể của các thuật toán tìm kiếm:
 
 ## 5. Kiến trúc thư mục
 Dự án áp dụng mô hình thiết kế Modular chặt chẽ:
+'''
 vacuum_ai_projects/
 │
 ├── algorithms/           # Chứa core logic của các thuật toán AI
@@ -78,6 +79,7 @@ vacuum_ai_projects/
 │
 ├── main.py               # Entry point (Điểm khởi chạy ứng dụng)
 └── README.md
+'''
 ## 6. Hướng dẫn cài đặt
 - Yêu cầu: python >= 3.8
 - Khởi chạy:
