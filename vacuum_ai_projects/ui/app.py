@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, scrolledtext
 import random
+import time
 
 from models.state import State
 from algorithms.bfs_type1 import BFSType1
@@ -10,11 +11,13 @@ from algorithms.dfs_type2 import DFSType2
 from algorithms.ids_type1 import IDSType1
 from algorithms.ids_type2 import IDSType2
 from algorithms.ucs import UCS
+from algorithms.greedy import GreedySearch
+from algorithms.astar import AStar
 
 class VacuumApp:
     def __init__(self, root):
         self.root = root
-        self.root.geometry("1400x850")
+        self.root.geometry("1400x950")
         self.rows = 6
         self.cols = 6
         self.robot_pos = (0, 0)
@@ -58,13 +61,15 @@ class VacuumApp:
         tk.Radiobutton(self.frame_left, text="IDS Type 1", variable=self.algo_var, value="IDS_T1", bg="#f0f0f0").pack(anchor=tk.W)
         tk.Radiobutton(self.frame_left, text="IDS Type 2", variable=self.algo_var, value="IDS_T2", bg="#f0f0f0").pack(anchor=tk.W)
         tk.Radiobutton(self.frame_left, text="UCS (Uniform Cost)", variable=self.algo_var, value="UCS", bg="#f0f0f0").pack(anchor=tk.W)
+        tk.Radiobutton(self.frame_left, text="Greedy Best-First", variable=self.algo_var, value="GREEDY", bg="#f0f0f0").pack(anchor=tk.W)
+        tk.Radiobutton(self.frame_left, text="A* Search", variable=self.algo_var, value="ASTAR", bg="#f0f0f0").pack(anchor=tk.W)
         # KHU VỰC CÁC NÚT ĐIỀU KHIỂN
         tk.Button(self.frame_left, text="Start / Reset", command=self.start_search, width=15, bg="#4CAF50",
                   fg="white").pack(pady=(20, 5))
         tk.Button(self.frame_left, text="Next Step", command=self.next_step, width=15).pack(pady=5)
         tk.Label(self.frame_left, text="Log Auto Speed (ms):", bg="#f0f0f0").pack(anchor=tk.W, pady=(15, 0))
         self.speed_var = tk.IntVar(value=500)
-        tk.Scale(self.frame_left, from_=50, to=2000, orient=tk.HORIZONTAL, variable=self.speed_var, bg="#f0f0f0").pack(
+        tk.Scale(self.frame_left, from_=1, to=2000, orient=tk.HORIZONTAL, variable=self.speed_var, bg="#f0f0f0").pack(
             fill=tk.X)
         self.btn_auto = tk.Button(self.frame_left, text="Auto Run", command=self.toggle_auto_run, width=15)
         self.btn_auto.pack(pady=5)
@@ -83,9 +88,9 @@ class VacuumApp:
         self.lbl_stats.pack(anchor=tk.W)
         tk.Label(self.frame_bottom, text="FINAL SOLUTION PATH:", font=("Arial", 10, "bold")).pack(anchor=tk.W,
                                                                                                   pady=(10, 2))
-        self.solution_text = tk.Text(self.frame_bottom, height=4, width=60, state=tk.DISABLED, font=("Consolas", 10),
+        self.solution_text = tk.Text(self.frame_bottom, height=9, width=60, state=tk.DISABLED, font=("Consolas", 10),
                                      bg="#fdfdfd", fg="#D84315", wrap=tk.WORD)
-        self.solution_text.pack(fill=tk.X, pady=2)
+        self.solution_text.pack(fill=tk.BOTH, expand=True, pady=2)
         self.frame_right = tk.Frame(self.root, width=500, padx=10, pady=10)
         self.frame_right.pack(side=tk.RIGHT, fill=tk.BOTH)
         tk.Label(self.frame_right, text="ALGORITHM LOGS", font=("Arial", 14, "bold")).pack(pady=5)
@@ -112,7 +117,7 @@ class VacuumApp:
 
     def format_trace_log(self, step_data):
         log_msg = step_data.get("log", "")
-        # 1. Format lại Log action
+        # 1. Format Log action
         if "POP" in log_msg:
             self.append_log(f"\n[▼] {log_msg}", "bold_pop")
         elif "GENERATE" in log_msg:
@@ -125,12 +130,18 @@ class VacuumApp:
             self.append_log(log_msg)
         # 2. Format Frontier
         if "frontier" in step_data:
-            f_states = [
-                f"({n.state.robot_pos[0]},{n.state.robot_pos[1]}|D:{len(n.state.dirts)})[{n.action if n.action else 'START'}]"
-                for n in step_data["frontier"]]
+            f_states = []
+            for n in step_data["frontier"]:
+                act = n.action if n.action else 'START'
+                cost_str = ""
+                if hasattr(n, 'f'): 
+                    cost_str = f"|f={n.f}"
+                elif hasattr(n, 'h'): 
+                    cost_str = f"|h={n.h}"
+                f_states.append(f"({n.state.robot_pos[0]},{n.state.robot_pos[1]}|D:{len(n.state.dirts)}{cost_str})[{act}]")
             self.append_log(f"    [Frontier: {len(f_states)} nodes]", "bold_title")
             for i in range(0, len(f_states), 4):
-                chunk = ", ".join(f_states[i:i + 4])
+                chunk = ", ".join(f_states[i:i+4])
                 self.append_log(f"       {chunk}")
         # 3. Format Reached (Explored)
         if "explored" in step_data:
@@ -222,16 +233,25 @@ class VacuumApp:
 
 
     def start_search(self):
-        self.stop_all()  # Reset lại trạng thái
+        self.stop_all() # Reset lại trạng thái
         algo_choice = self.algo_var.get()
         initial_state = State(self.robot_pos, self.dirts)
+        
         self.log_text.config(state=tk.NORMAL)
         self.log_text.delete(1.0, tk.END)
         self.log_text.config(state=tk.DISABLED)
-        self.append_log(f"--- STARTING {algo_choice} ---")
+        self.append_log(f"--- STARTING {algo_choice} ---", "bold_title")
+        
         self.clear_solution_box()
         self.lbl_stats.config(text="Searching...", fg="orange")
         self.draw_grid()
+        
+        # 1. Reset các biến đếm (Bỏ self.current_algo ra khỏi đây)
+        self.max_frontier_size = 0
+        self.compute_time = 0.0
+        self.nodes_expanded = 0 
+        
+        # 2. Khởi tạo thuật toán dựa vào lựa chọn
         if algo_choice == "BFS_T1":
             algo = BFSType1(self.rows, self.cols, self.obstacles)
         elif algo_choice == "BFS_T2":
@@ -246,7 +266,20 @@ class VacuumApp:
             algo = IDSType2(self.rows, self.cols, self.obstacles)
         elif algo_choice == "UCS":
             algo = UCS(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "GREEDY":
+            algo = GreedySearch(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "ASTAR":
+            algo = AStar(self.rows, self.cols, self.obstacles)
+        else:
+            algo = BFSType1(self.rows, self.cols, self.obstacles)
+            
+        # 3. SAU KHI algo ĐÃ ĐƯỢC TẠO, TA MỚI GÁN CÁC BIẾN NÀY (Đưa xuống cuối cùng)
+        self.current_algo = algo
         self.search_generator = algo.search(initial_state)
+        
+        # 4. Reset trạng thái nút bấm
+        self.is_auto_running = False
+        self.btn_auto.config(text="Auto Run", bg="SystemButtonFace", fg="black")
 
     def toggle_auto_run(self):
         if not self.search_generator:
@@ -272,29 +305,90 @@ class VacuumApp:
             if not self.is_animating:
                 self.append_log("Vui lòng bấm Start trước!")
             return
+        start_t = time.perf_counter() 
         try:
             step_data = next(self.search_generator)
+            self.compute_time += (time.perf_counter() - start_t) 
+            # 1. Format Log 
             self.format_trace_log(step_data)
+            # Tăng biến đếm Nodes Expanded mỗi khi có hành động POP
+            if "POP" in step_data.get("log", ""):
+                self.nodes_expanded += 1
+            # 2. Theo dõi Max Frontier liên tục
+            if "frontier" in step_data:
+                current_f_size = len(step_data["frontier"])
+                if current_f_size > self.max_frontier_size:
+                    self.max_frontier_size = current_f_size
+            # 3. Kết thúc thuật toán và in Thống kê
             if "solution" in step_data:
+                algo_name = self.algo_var.get()
+                nodes_gen = self.current_algo.nodes_generated
                 if step_data["solution"] is not None:
                     path = step_data["solution"].get_path()
-                    actions = [node.action for node in path if node.action is not None]
+                    
+                    # Xử lý hành động solution bao gồm cả suck(suck vẫn tính là 1 bước)
+                    actions = []
+                    suck_count = 0
+                    for i in range(1, len(path)):
+                        curr_node = path[i]
+                        prev_node = path[i-1]
+                        # Thêm hành động di chuyển (UP, DOWN, LEFT, RIGHT)
+                        actions.append(curr_node.action)
+                        # So sánh số lượng rác, nếu giảm đi tức là có thực hiện "Suck"
+                        if len(curr_node.state.dirts) < len(prev_node.state.dirts):
+                            actions.append("Suck")
+                            suck_count += 1
                     action_str = " -> ".join(actions)
-                    self.append_log(f"\n=> SUCCESS! Giải pháp tốn {len(path) - 1} bước.")
-                    self.lbl_stats.config(text=f"Solved! Steps: {len(path) - 1}", fg="green")
+                    # Cập nhật số bước và chi phí tính cả hành động Suck
+                    total_steps = len(actions)
+                    total_cost = step_data["solution"].path_cost + suck_count
+                    self.append_log(f"\n=> SUCCESS! Giải pháp tốn {total_steps} bước (Bao gồm cả di chuyển và hút rác).")
+                    self.lbl_stats.config(text=f"Solved! Steps: {total_steps} | Cost: {total_cost}", fg="green")
+                    # --- FORMAT BẢNG THỐNG KÊ 
+                    stats_str = (
+                        f"Solution      : {action_str}\n"
+                        f"----------------------------------------------------------\n"
+                        f"Thuật toán    : {algo_name}\n"
+                        f"Kết quả       : ☑ TÌM ĐƯỢC LỜI GIẢI\n"
+                        f"Số bước       : {total_steps}\n"
+                        f"Chi phí       : {total_cost}\n"
+                        f"Nodes sinh ra : {nodes_gen} (Generated)\n"
+                        f"Nodes duyệt   : {self.nodes_expanded} (Expanded)\n"
+                        f"Max Frontier  : {self.max_frontier_size}\n"
+                    )
+                    
                     self.solution_text.config(state=tk.NORMAL)
                     self.solution_text.delete(1.0, tk.END)
-                    self.solution_text.insert(tk.END, action_str)
+                    self.solution_text.insert(tk.END, stats_str)
                     self.solution_text.config(state=tk.DISABLED)
+                    
                     self.append_log("\n>> Đang phát Animation Solution...")
                     self.is_animating = True
                     self.animate_solution(path, step_index=0)
                 else:
                     self.append_log("\n=> FAILED! Không tìm thấy đường.")
                     self.lbl_stats.config(text="Failed: No solution", fg="red")
+                    
+                    # BẢNG THỐNG KÊ KHI THẤT BẠI
+                    stats_str = (
+                        f"Solution      : NO PATH FOUND\n"
+                        f"----------------------------------------------------------\n"
+                        f"Thuật toán    : {algo_name}\n"
+                        f"Kết quả       : ☒ THẤT BẠI (Không có đường đi)\n"
+                        f"Nodes sinh ra : {nodes_gen} (Generated)\n"
+                        f"Nodes duyệt   : {self.nodes_expanded} (Expanded)\n"
+                        f"Max Frontier  : {self.max_frontier_size}\n"
+                    )
+                    
+                    self.solution_text.config(state=tk.NORMAL)
+                    self.solution_text.delete(1.0, tk.END)
+                    self.solution_text.insert(tk.END, stats_str)
+                    self.solution_text.config(state=tk.DISABLED)
+                    
                 self.is_auto_running = False
                 self.btn_auto.config(text="Auto Run", bg="SystemButtonFace", fg="black")
                 self.search_generator = None
+                
         except StopIteration:
             self.search_generator = None
 

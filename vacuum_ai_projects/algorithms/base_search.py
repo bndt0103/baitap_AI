@@ -10,7 +10,7 @@ class BaseSearch:
         self.grid_rows = grid_rows
         self.grid_cols = grid_cols
         self.obstacles = set(obstacles)
-
+        self.nodes_generated = 1  
     def get_successors(self, node):
         successors = []
         r, c = node.state.robot_pos
@@ -22,4 +22,5 @@ class BaseSearch:
                     new_state = State((nr, nc), new_dirts)
                     new_node = Node(new_state, node, action_name, node.path_cost + 1)
                     successors.append(new_node)
+                    self.nodes_generated += 1      
         return successors
