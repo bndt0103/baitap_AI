@@ -84,7 +84,7 @@ vacuum_ai_projects/
 - Yêu cầu: python >= 3.8
 - Khởi chạy:
     + Clone repository về máy:
-      git clone [https://github.com/your-username/vacuum_ai_projects.git](https://github.com/your-username/vacuum_ai_projects.git)
+      git clone https://github.com/your-username/vacuum_ai_projects.git
     + Di chuyển vào thư mục dự án
       cd vacuum_ai_projects
     + Chạy chương trình
