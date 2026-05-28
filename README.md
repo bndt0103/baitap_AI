@@ -8,6 +8,9 @@ trong lĩnh vực Trí tuệ nhân tạo (AI).
 - Dự án được thiết kế chuẩn theo mô hình MVC và OOP hỗ trợ xuất log chi tiết để đối chiếu trực tiếp
 với quá trình trace tay trên giấy.
 
+- Demo chương trình
+<img width="1892" height="1008" alt="Thiết kế chưa có tên" src="https://github.com/user-attachments/assets/299e8e44-958f-4cba-a462-09c6c6bcb593" />
+
 ## Mục lục
 1. Mục đích 
 2. Đầu vào & đầu ra (Input/ Output)
