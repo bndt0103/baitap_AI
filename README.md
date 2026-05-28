@@ -3,10 +3,10 @@
 - Dự án mô phỏng Agent Robot Hút Bụi (Vacuum Cleaner Agent) nhằm trực quan hóa và đánh giá hiệu năng của các thuật toán tìm kiếm (Search Algorithms) 
 trong lĩnh vực Trí tuệ nhân tạo (AI). 
 
-- Dự án được thiết kế chuẩn theo mô hình **MVC** và **OOP**, bám sát 100% lý thuyết học thuật, đặc biệt hỗ trợ xuất log chi tiết để đối chiếu trực tiếp
+- Dự án được thiết kế chuẩn theo mô hình MVC và OOP hỗ trợ xuất log chi tiết để đối chiếu trực tiếp
 với quá trình trace tay trên giấy.
 
-## 📑 Mục lục
+## Mục lục
 1. Mục đích 
 2. Đầu vào & đầu ra (Input/ Output)
 3. Các thuật toán hỗ trợ
