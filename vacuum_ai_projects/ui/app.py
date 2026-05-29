@@ -13,6 +13,10 @@ from algorithms.ids_type2 import IDSType2
 from algorithms.ucs import UCS
 from algorithms.greedy import GreedySearch
 from algorithms.astar import AStar
+from algorithms.idastar import IDAStar
+from algorithms.simple_hc import SimpleHillClimbing
+from algorithms.steepest_hc import SteepestAscentHillClimbing
+from algorithms.stochastic_hc import StochasticHillClimbing
 
 class VacuumApp:
     def __init__(self, root):
@@ -35,6 +39,11 @@ class VacuumApp:
 
     def setup_ui(self):
         # 1. KHUNG BÊN TRÁI: Control Panel
+        import tkinter.font as tkfont
+        self.font_main = tkfont.Font(family="Segoe UI", size=10)
+        self.font_bold = tkfont.Font(family="Segoe UI", size=10, weight="bold")
+        self.font_title = tkfont.Font(family="Segoe UI", size=12, weight="bold")
+        
         self.frame_left = tk.Frame(self.root, width=220, bg="#f0f0f0", padx=10, pady=10)
         self.frame_left.pack(side=tk.LEFT, fill=tk.Y)
         tk.Label(self.frame_left, text="CONTROLS", font=("Arial", 14, "bold"), bg="#f0f0f0").pack(pady=10)
@@ -48,21 +57,26 @@ class VacuumApp:
         tk.Label(size_frame, text="Cols:", bg="#f0f0f0").pack(side=tk.LEFT)
         tk.Spinbox(size_frame, from_=1, to=6, textvariable=self.col_var, width=3).pack(side=tk.LEFT)
         tk.Button(self.frame_left, text="Generate Map", command=self.generate_random_map, width=15).pack(pady=10)
-        tk.Label(self.frame_left, text="Algorithms:", bg="#f0f0f0").pack(pady=(15, 0))
-        self.algo_var = tk.StringVar(value="BFS_T1")
-        tk.Radiobutton(self.frame_left, text="BFS Type 1", variable=self.algo_var, value="BFS_T1", bg="#f0f0f0").pack(
-            anchor=tk.W)
-        tk.Radiobutton(self.frame_left, text="BFS Type 2", variable=self.algo_var, value="BFS_T2", bg="#f0f0f0").pack(
-            anchor=tk.W)
-        tk.Radiobutton(self.frame_left, text="DFS Type 1", variable=self.algo_var, value="DFS_T1", bg="#f0f0f0").pack(
-            anchor=tk.W)
-        tk.Radiobutton(self.frame_left, text="DFS Type 2", variable=self.algo_var, value="DFS_T2", bg="#f0f0f0").pack(
-            anchor=tk.W)
-        tk.Radiobutton(self.frame_left, text="IDS Type 1", variable=self.algo_var, value="IDS_T1", bg="#f0f0f0").pack(anchor=tk.W)
-        tk.Radiobutton(self.frame_left, text="IDS Type 2", variable=self.algo_var, value="IDS_T2", bg="#f0f0f0").pack(anchor=tk.W)
-        tk.Radiobutton(self.frame_left, text="UCS (Uniform Cost)", variable=self.algo_var, value="UCS", bg="#f0f0f0").pack(anchor=tk.W)
-        tk.Radiobutton(self.frame_left, text="Greedy Best-First", variable=self.algo_var, value="GREEDY", bg="#f0f0f0").pack(anchor=tk.W)
-        tk.Radiobutton(self.frame_left, text="A* Search", variable=self.algo_var, value="ASTAR", bg="#f0f0f0").pack(anchor=tk.W)
+        tk.Label(self.frame_left, text="Algorithms:", font=self.font_bold, bg="#f0f0f0").pack(pady=(15, 5), anchor=tk.W)
+        
+        self.algo_var = tk.StringVar()
+        algo_list = [
+            "BFS Type 1", "BFS Type 2", 
+            "DFS Type 1", "DFS Type 2", 
+            "IDS Type 1", "IDS Type 2", 
+            "UCS (Uniform Cost)", 
+            "Greedy Best-First", 
+            "A* Search",
+            "IDA* (Iterative Deepening A*)",
+            "Simple Hill Climbing",
+            "Steepest-Ascent HC",
+            "Stochastic HC"
+        ]
+        
+        # Khởi tạo Combobox
+        self.algo_combo = ttk.Combobox(self.frame_left, textvariable=self.algo_var, values=algo_list, state="readonly", width=25)
+        self.algo_combo.current(0) # Đặt giá trị mặc định là BFS Type 1
+        self.algo_combo.pack(fill=tk.X, pady=(0, 20))
         # KHU VỰC CÁC NÚT ĐIỀU KHIỂN
         tk.Button(self.frame_left, text="Start / Reset", command=self.start_search, width=15, bg="#4CAF50",
                   fg="white").pack(pady=(20, 5))
@@ -270,6 +284,14 @@ class VacuumApp:
             algo = GreedySearch(self.rows, self.cols, self.obstacles)
         elif algo_choice == "ASTAR":
             algo = AStar(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "IDA* (Iterative Deepening A*)":
+            algo = IDAStar(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "Simple Hill Climbing":
+            algo = SimpleHillClimbing(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "Steepest-Ascent HC":
+            algo = SteepestAscentHillClimbing(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "Stochastic HC":
+            algo = StochasticHillClimbing(self.rows, self.cols, self.obstacles)
         else:
             algo = BFSType1(self.rows, self.cols, self.obstacles)
             
