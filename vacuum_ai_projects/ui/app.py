@@ -17,6 +17,8 @@ from algorithms.idastar import IDAStar
 from algorithms.simple_hc import SimpleHillClimbing
 from algorithms.steepest_hc import SteepestAscentHillClimbing
 from algorithms.stochastic_hc import StochasticHillClimbing
+from algorithms.steepest_hc_random import SteepestAscentRandomHC
+from algorithms.random_restart_hc import RandomRestartHillClimbing
 
 class VacuumApp:
     def __init__(self, root):
@@ -70,7 +72,9 @@ class VacuumApp:
             "IDA* (Iterative Deepening A*)",
             "Simple Hill Climbing",
             "Steepest-Ascent HC",
-            "Stochastic HC"
+            "Stochastic HC",
+            "Steepest-Ascent Random HC",
+            "Random-Restart HC"
         ]
         
         # Khởi tạo Combobox
@@ -292,6 +296,10 @@ class VacuumApp:
             algo = SteepestAscentHillClimbing(self.rows, self.cols, self.obstacles)
         elif algo_choice == "Stochastic HC":
             algo = StochasticHillClimbing(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "Steepest-Ascent Random HC":  
+            algo = SteepestAscentRandomHC(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "Random-Restart HC": 
+            algo = RandomRestartHillClimbing(self.rows, self.cols, self.obstacles)
         else:
             algo = BFSType1(self.rows, self.cols, self.obstacles)
             
