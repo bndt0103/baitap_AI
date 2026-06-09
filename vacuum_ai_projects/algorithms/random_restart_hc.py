@@ -15,11 +15,9 @@ class RandomRestartHillClimbing(BaseSearch):
         # 2. CHO i = 1 đến MAX_RESTART:
         for i in range(1, MAX_RESTART + 1):
             yield {"log": f"\n=== [LƯỢT {i}/{MAX_RESTART}] KHỞI TẠO LẠI TỪ ĐẦU (RESTART) ===", "frontier": [], "explored": []}
-            
-            # Current_State = Start
             current = Node(initial_state)
             current.h = self.heuristic(current.state)
-            yield {"log": f"INIT: Current_State = {current.state} (h={current.h})", "frontier": [current], "explored": []}
+            yield {"log": f"INIT: Current_State = {current.state} (h={current.h})", "frontier": [], "explored": []}
 
             # TRONG KHI (đúng):
             while True:
@@ -27,12 +25,11 @@ class RandomRestartHillClimbing(BaseSearch):
                 if current.state.is_goal():
                     yield {"log": f"GOAL FOUND (Tại lượt chạy thứ {i})! TRẢ VỀ Current_State.", "solution": current}
                     return
-
                 # Sinh tất cả các trạng thái lân cận của Current_State
                 neighbors = self.get_successors(current)
                 for child in neighbors:
                     child.h = self.heuristic(child.state)
-                    yield {"log": f"GENERATE Neighbor: {child.state} (h={child.h})", "frontier": [current], "explored": []}
+                    yield {"log": f"GENERATE Neighbor: {child.state} (h={child.h})", "frontier": [], "explored": []}
 
                 # Lọc ra tập Better_Neighbors = {Neighbor | Value(Neighbor) tốt hơn Value(Current_State)}
                 better_neighbors = [child for child in neighbors if child.h < current.h]
@@ -41,18 +38,13 @@ class RandomRestartHillClimbing(BaseSearch):
                 if not better_neighbors:
                     yield {"log": f"  [!] Better_Neighbors RỖNG. Thoát vòng lặp TRONG KHI (Lượt {i} bị kẹt, nhảy sang lượt tiếp theo).", "solution": None}
                     break # Thoát vòng lặp While, nhảy sang vòng lặp For (Lượt i tiếp theo)
-
                 # NGƯỢC LẠI:
                 # Next_State = Chọn trạng thái tốt nhất từ tập Better_Neighbors
                 min_h = min(child.h for child in better_neighbors)
                 best_neighbors = [child for child in better_neighbors if child.h == min_h]
-                
                 # CHỌN NGẪU NHIÊN để tạo con đường khác biệt cho mỗi lần Restart
                 next_state = random.choice(best_neighbors)
-                
-                yield {"log": f"  => TÌM THẤY {len(best_neighbors)} NEIGHBOR TỐT NHẤT (h={min_h}). CHỌN RANDOM Next_State = {next_state.state}", "frontier": [current], "explored": []}
-
-                # Current_State = Next_State
+                yield {"log": f"  => TÌM THẤY {len(best_neighbors)} NEIGHBOR TỐT NHẤT (h={min_h}). CHỌN RANDOM Next_State = {next_state.state}", "frontier": [], "explored": []}
                 current = next_state
 
         # 3. TRẢ VỀ "Thất bại" // Chạy hết sạch MAX_RESTART lượt mà không chạm được Goal

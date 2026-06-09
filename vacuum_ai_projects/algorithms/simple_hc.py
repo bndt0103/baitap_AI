@@ -11,7 +11,8 @@ class SimpleHillClimbing(BaseSearch):
         # 1. Current_State = Start
         current = Node(initial_state)
         current.h = self.heuristic(current.state)
-        yield {"log": f"INIT: Current_State = {current.state} (h={current.h})", "frontier": [current], "explored": []}
+        yield {"log": f"INIT: Current_State = {current.state} (h={current.h})", "frontier": [], "explored": []}
+        
         # 2. TRONG KHI (đúng):
         while True:
             # Nếu Current_State == Goal: TRẢ VỀ Current_State
@@ -22,10 +23,10 @@ class SimpleHillClimbing(BaseSearch):
             # Sinh các trạng thái lân cận của Current_State.
             for child in self.get_successors(current):
                 child.h = self.heuristic(child.state)
-                yield {"log": f"GENERATE Neighbor: {child.state} (h={child.h})", "frontier": [current], "explored": []}
+                yield {"log": f"GENERATE Neighbor: {child.state} (h={child.h})", "frontier": [], "explored": []}
                 # Tìm thấy Next_State ĐẦU TIÊN có Value tốt hơn (h nhỏ hơn)
                 if child.h < current.h:
-                    yield {"log": f"  => TÌM THẤY NEIGHBOR ĐẦU TIÊN TỐT HƠN! Current_State = Next_State", "frontier": [current], "explored": []}
+                    yield {"log": f"  => TÌM THẤY NEIGHBOR ĐẦU TIÊN TỐT HƠN! Current_State = Next_State", "frontier": [], "explored": []}
                     current = child
                     found_better = True
                     break # Lập tức thoát vòng lặp sinh, tiếp tục vòng lặp While (Quay lại bước 2)

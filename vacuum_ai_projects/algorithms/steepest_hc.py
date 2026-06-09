@@ -11,7 +11,7 @@ class SteepestAscentHillClimbing(BaseSearch):
         # 1. Current_State = Start
         current = Node(initial_state)
         current.h = self.heuristic(current.state)
-        yield {"log": f"INIT: Current_State = {current.state} (h={current.h})", "frontier": [current], "explored": []}
+        yield {"log": f"INIT: Current_State = {current.state} (h={current.h})", "frontier": [], "explored": []}
         # 2. TRONG KHI (đúng):
         while True:
             # Nếu Current_State == Goal: TRẢ VỀ Current_State
@@ -22,21 +22,21 @@ class SteepestAscentHillClimbing(BaseSearch):
             neighbors = self.get_successors(current)
             if not neighbors:
                 yield {"log": f"FAILURE: Không có lân cận. Dừng.", "solution": None}
-                return
+                return  
             # Khởi tạo Best_Neighbor tạm thời là phần tử đầu tiên
             best_neighbor = neighbors[0]
             best_neighbor.h = self.heuristic(best_neighbor.state)
-            yield {"log": f"GENERATE Neighbor: {best_neighbor.state} (h={best_neighbor.h})", "frontier": [current], "explored": []}
+            yield {"log": f"GENERATE Neighbor: {best_neighbor.state} (h={best_neighbor.h})", "frontier": [], "explored": []}
             # Chọn ra trạng thái lân cận tốt nhất là Best_Neighbor
             for i in range(1, len(neighbors)):
                 child = neighbors[i]
                 child.h = self.heuristic(child.state)
-                yield {"log": f"GENERATE Neighbor: {child.state} (h={child.h})", "frontier": [current], "explored": []}
+                yield {"log": f"GENERATE Neighbor: {child.state} (h={child.h})", "frontier": [], "explored": []}
                 if child.h < best_neighbor.h:
                     best_neighbor = child
             # NẾU Value(Best_Neighbor) tốt hơn Value(Current_State)
             if best_neighbor.h < current.h:
-                yield {"log": f"  => CHỌN NEIGHBOR TỐT NHẤT: {best_neighbor.state} (h={best_neighbor.h}). Quay lại đầu vòng lặp.", "frontier": [current], "explored": []}
+                yield {"log": f"  => CHỌN NEIGHBOR TỐT NHẤT: {best_neighbor.state} (h={best_neighbor.h}). Quay lại đầu vòng lặp.", "frontier": [], "explored": []}
                 # Current_State = Best_Neighbor (Quay lại đầu vòng lặp)
                 current = best_neighbor
             else:

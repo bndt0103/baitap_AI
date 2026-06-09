@@ -19,6 +19,10 @@ from algorithms.steepest_hc import SteepestAscentHillClimbing
 from algorithms.stochastic_hc import StochasticHillClimbing
 from algorithms.steepest_hc_random import SteepestAscentRandomHC
 from algorithms.random_restart_hc import RandomRestartHillClimbing
+from algorithms.local_beam import LocalBeamSearch
+from algorithms.simulated_annealing import SimulatedAnnealing
+from algorithms.sensorless_dfs import SensorlessDFS
+from algorithms.partially_observable_dfs import PartiallyObservableDFS
 
 class VacuumApp:
     def __init__(self, root):
@@ -69,12 +73,16 @@ class VacuumApp:
             "UCS (Uniform Cost)", 
             "Greedy Best-First", 
             "A* Search",
-            "IDA* (Iterative Deepening A*)",
+            "IDA*",
             "Simple Hill Climbing",
             "Steepest-Ascent HC",
             "Stochastic HC",
             "Steepest-Ascent Random HC",
-            "Random-Restart HC"
+            "Random-Restart HC",
+            "Local Beam Search",  
+            "Simulated Annealing",
+            "Sensorless DFS",
+            "Partially Observable DFS"
         ]
         
         # Khởi tạo Combobox
@@ -288,7 +296,7 @@ class VacuumApp:
             algo = GreedySearch(self.rows, self.cols, self.obstacles)
         elif algo_choice == "ASTAR":
             algo = AStar(self.rows, self.cols, self.obstacles)
-        elif algo_choice == "IDA* (Iterative Deepening A*)":
+        elif algo_choice == "IDA*":
             algo = IDAStar(self.rows, self.cols, self.obstacles)
         elif algo_choice == "Simple Hill Climbing":
             algo = SimpleHillClimbing(self.rows, self.cols, self.obstacles)
@@ -300,6 +308,14 @@ class VacuumApp:
             algo = SteepestAscentRandomHC(self.rows, self.cols, self.obstacles)
         elif algo_choice == "Random-Restart HC": 
             algo = RandomRestartHillClimbing(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "Local Beam Search":
+            algo = LocalBeamSearch(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "Simulated Annealing":
+            algo = SimulatedAnnealing(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "Sensorless DFS":
+            algo = SensorlessDFS(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "Partially Observable DFS": 
+            algo = PartiallyObservableDFS(self.rows, self.cols, self.obstacles)
         else:
             algo = BFSType1(self.rows, self.cols, self.obstacles)
             

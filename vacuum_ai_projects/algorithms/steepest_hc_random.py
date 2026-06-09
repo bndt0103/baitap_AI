@@ -11,8 +11,7 @@ class SteepestAscentRandomHC(BaseSearch):
     def search(self, initial_state):
         current = Node(initial_state)
         current.h = self.heuristic(current.state)
-        yield {"log": f"INIT: Current_State = {current.state} (h={current.h})", "frontier": [current], "explored": []}
-
+        yield {"log": f"INIT: Current_State = {current.state} (h={current.h})", "frontier": [], "explored": []}
         sideways_moves = 0
         max_sideways = 100 # Giới hạn 100 bước đi ngang liên tiếp để chống lặp vô hạn
 
@@ -20,17 +19,14 @@ class SteepestAscentRandomHC(BaseSearch):
             if current.state.is_goal():
                 yield {"log": "GOAL FOUND! Trả về Current_State.", "solution": current}
                 return
-
             neighbors = self.get_successors(current)
             if not neighbors:
                 yield {"log": "FAILURE: Không có lân cận. Dừng.", "solution": None}
                 return
-
             # Tính h cho tất cả các trạng thái lân cận
             for child in neighbors:
                 child.h = self.heuristic(child.state)
-                yield {"log": f"GENERATE Neighbor: {child.state} (h={child.h})", "frontier": [current], "explored": []}
-
+                yield {"log": f"GENERATE Neighbor: {child.state} (h={child.h})", "frontier": [], "explored": []}
             # 1. Tìm giá trị h nhỏ nhất trong số các lân cận
             min_h = min(child.h for child in neighbors)
 
@@ -54,7 +50,7 @@ class SteepestAscentRandomHC(BaseSearch):
 
             # 5. CHỌN NGẪU NHIÊN 1 trong số các neighbor tốt nhất
             chosen_neighbor = random.choice(best_neighbors)
-            yield {"log": f"  => TÌM THẤY {len(best_neighbors)} NEIGHBOR CÙNG ĐẠT h MIN ({min_h}). CHỌN RANDOM: {chosen_neighbor.state}", "frontier": [current], "explored": []}
+            yield {"log": f"  => TÌM THẤY {len(best_neighbors)} NEIGHBOR CÙNG ĐẠT h MIN ({min_h}). CHỌN RANDOM: {chosen_neighbor.state}", "frontier": [], "explored": []}
             
             # Gán trạng thái mới và lặp lại
             current = chosen_neighbor
