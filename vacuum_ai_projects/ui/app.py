@@ -23,6 +23,7 @@ from algorithms.local_beam import LocalBeamSearch
 from algorithms.simulated_annealing import SimulatedAnnealing
 from algorithms.sensorless_dfs import SensorlessDFS
 from algorithms.partially_observable_dfs import PartiallyObservableDFS
+from algorithms.and_or_search import AndOrSearch
 
 class VacuumApp:
     def __init__(self, root):
@@ -82,7 +83,8 @@ class VacuumApp:
             "Local Beam Search",  
             "Simulated Annealing",
             "Sensorless DFS",
-            "Partially Observable DFS"
+            "Partially Observable DFS",
+            "AND-OR Graph Search"
         ]
         
         # Khởi tạo Combobox
@@ -316,6 +318,8 @@ class VacuumApp:
             algo = SensorlessDFS(self.rows, self.cols, self.obstacles)
         elif algo_choice == "Partially Observable DFS": 
             algo = PartiallyObservableDFS(self.rows, self.cols, self.obstacles)
+        elif algo_choice == "AND-OR Graph Search":  # <-- THÊM NHÁNH NÀY
+            algo = AndOrSearch(self.rows, self.cols, self.obstacles)
         else:
             algo = BFSType1(self.rows, self.cols, self.obstacles)
             
