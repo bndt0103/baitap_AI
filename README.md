@@ -75,8 +75,7 @@ Xây dựng AI đánh Cờ Caro. Khác biệt cốt lõi so với các bài toá
 - **Alpha-Beta Pruning (Tỉa nhánh Alpha-Beta)**: Là bản nâng cấp hoàn hảo của Minimax. Bằng cách duy trì 2 ranh giới cận alpha và beta, thuật toán nhận diện và cắt tỉa (loại bỏ) những nhánh không có khả năng mang lại kết quả tốt hơn những gì đã khám phá. Điều này giúp cắt giảm hàng triệu phép tính toán vô ích mà vẫn bảo toàn 100% tính chính xác của Minimax.
 
 > **Minh họa thuật toán Đối kháng (Game Caro):**
-<img width="1064" height="1650" alt="caro_games" src="https://github.com/user-attachments/assets/af2c9b07-0eb8-49b8-86d6-308f0b474f90" />
-
+<img width="580" height="900" alt="caro_game" src="https://github.com/user-attachments/assets/b41cc676-e366-4e2b-9f13-a49cb7a82471" />
 
 
 ## 4. Tính năng nổi bật
