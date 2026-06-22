@@ -1,6 +1,6 @@
 # Tổng hợp Dự án & Bài tập Trí Tuệ Nhân Tạo (AI)
 
-Kho lưu trữ này là nơi tổng hợp các đồ án và bài tập thực hành thuộc môn học Trí tuệ nhân tạo (AI). Nội dung bao phủ các chủ đề cốt lõi của AI, trải dài từ việc thiết kế các tác tử phản xạ (Reflex Agent) cơ bản, cho đến việc ứng dụng 6 nhóm thuật toán tìm kiếm đa dạng vào các môi trường mô phỏng thực tế như Robot hút bụi, bài toán tô màu bản đồ và game cờ Caro.
+Kho lưu trữ này tổng hợp các dự án và bài tập thực hành thuộc môn học Trí tuệ nhân tạo (AI). Nội dung bao phủ các chủ đề cốt lõi về tìm kiếm của AI, trải dài từ việc thiết kế các tác tử phản xạ (Reflex Agent) cơ bản, cho đến việc ứng dụng 6 nhóm thuật toán tìm kiếm đa dạng vào các môi trường mô phỏng thực tế như Robot hút bụi, bài toán tô màu bản đồ và game cờ Caro.
 
 - **Demo tổng quan (Mô phỏng Vacuum Cleaner):**
 <img width="1892" height="1008" alt="Thiết kế chưa có tên" src="https://github.com/user-attachments/assets/299e8e44-958f-4cba-a462-09c6c6bcb593" />
@@ -16,41 +16,41 @@ Kho lưu trữ này là nơi tổng hợp các đồ án và bài tập thực h
 ---------------------------------------------------
 
 ## 1. Mục đích dự án
-- **Về mặt học thuật**: Giúp sinh viên nắm bắt vững vàng cơ chế hoạt động, sự khác biệt và ưu nhược điểm của từng thuật toán (Search Tree, CSP, Minimax...) thông qua việc trực quan hóa từng bước thực thi (step-by-step).
+- **Về mặt học thuật**: Giúp nắm bắt vững vàng cơ chế hoạt động, sự khác biệt và ưu nhược điểm của từng thuật toán (Search Tree, CSP, Minimax...) thông qua việc trực quan hóa từng bước thực thi (step-by-step).
 - **Về mặt thực tiễn**: Cung cấp một bộ các môi trường mô phỏng sinh động, cho phép tinh chỉnh cấu hình để đối chiếu và đánh giá hiệu năng thực tế (thời gian tính toán, độ phức tạp không gian, số lượng node sinh ra và mở rộng) của các hệ thống AI.
 
 ## 2. Tổng quan cấu trúc thư mục
 Dự án được phân bổ mạch lạc theo từng chủ đề học tập. Các file và thư mục chính bao gồm:
 
-- 📂 **`vacuum_ai_projects/`**: Đồ án mô phỏng Robot Hút Bụi (Vacuum Cleaner Agent). Hệ thống này tích hợp giao diện hiện đại và bao trọn 4 nhóm thuật toán tìm kiếm trên không gian trạng thái (Uninformed, Informed, Local Search, Complex Environments).
+- 📂 **`vacuum_ai_projects/`**: Dự án mô phỏng Robot Hút Bụi (Vacuum Cleaner Agent). Hệ thống này tích hợp giao diện hiện đại và bao gồm 4 nhóm thuật toán tìm kiếm trên không gian trạng thái (Uninformed, Informed, Local Search, Complex Environments).
 - 📄 **`coloring_map_tiengiang.ipynb`**: File Jupyter Notebook giải quyết bài toán tô màu bản đồ hành chính tỉnh Tiền Giang (trên ảnh thực tế). Áp dụng nhóm thuật toán Thỏa mãn ràng buộc (CSP).
 - 📄 **`caro_game.ipynb`**: File Jupyter Notebook chứa game Cờ Caro, ứng dụng nhóm thuật toán Tìm kiếm đối kháng (Adversarial Search) để xây dựng AI đối đầu trực tiếp với người chơi.
 - 📂 **`model_based_reflex_agent/`**: Mô phỏng tác tử có trạng thái (Model-based Agent), tích hợp bộ nhớ lưu trữ lịch sử môi trường cho các bài toán sơ cấp.
 - 📂 **`simple_reflex_sgent/`**: Mô phỏng tác tử phản xạ đơn giản (Simple Reflex Agent), hành động hoàn toàn dựa trên cảm nhận tức thời tại thời điểm hiện tại.
-- 📂 **`BFS/`**: Thư mục chứa các bài tập nền tảng nhằm làm quen với thuật toán Tìm kiếm theo chiều rộng (Breadth-First Search).
+- 📂 **`BFS/`**: Thư mục chứa các bài tập nền tảng nhằm làm quen với thuật toán tìm kiếm theo chiều rộng (Breadth-First Search).
 
 ## 3. Phân tích chi tiết 6 nhóm thuật toán AI
-Toàn bộ các thuật toán trong repository được cài đặt bám sát tư duy học thuật từ giáo trình tiêu chuẩn (AIMA). Chi tiết cụ thể như sau:
+Toàn bộ các thuật toán trong repository được cài đặt bám sát tư duy học thuật từ giáo trình tiêu chuẩn Russell. Chi tiết cụ thể như sau:
 
-### 🌟 Nhóm 1 đến 4: (Tích hợp trong đồ án Robot Hút Bụi - `vacuum_ai_projects/`)
+### 🌟 Nhóm 1 đến 4: (Tích hợp trong dự án Robot Hút Bụi - `vacuum_ai_projects/`)
 
 **1. Tìm kiếm mù (Uninformed Search)**
 Giải quyết bài toán bằng cách duyệt qua không gian trạng thái đơn thuần mà không có bất kỳ thông tin gợi ý nào về khoảng cách đến mục tiêu.
 - **Breadth-First Search (BFS)**: Duyệt cây tìm kiếm theo từng mức (chiều rộng). Luôn đảm bảo tìm được đường đi ngắn nhất (về số bước di chuyển), nhưng tiêu tốn bộ nhớ lớn do phải lưu trữ toàn bộ các node cùng mức vào tập biên (Frontier).
 - **Depth-First Search (DFS)**: Khám phá sâu nhất có thể dọc theo mỗi nhánh trước khi quay lui (backtracking). Tiết kiệm bộ nhớ hơn BFS, nhưng dễ bị kẹt ở các nhánh vô hạn và không đảm bảo tìm ra đường đi tối ưu.
 - **Iterative Deepening Search (IDS)**: Kết hợp ưu điểm của BFS và DFS. Thuật toán tiến hành tìm kiếm sâu dần với giới hạn độ sâu tăng dần qua từng bước lặp, vừa tối ưu bộ nhớ (đặc tính của DFS) vừa đảm bảo tính hoàn thiện (đặc tính của BFS).
-- **Uniform-Cost Search (UCS)**: Liên tục mở rộng node có chi phí đường đi ($g(n)$) thấp nhất. Đây là lựa chọn hoàn hảo khi các hành động có mức hao phí khác nhau, đảm bảo đường đi cuối cùng có tổng chi phí nhỏ nhất.
+- **Uniform-Cost Search (UCS)**: Liên tục mở rộng node có chi phí đường đi g(n) thấp nhất. Đây là lựa chọn hoàn hảo khi các hành động có mức hao phí khác nhau, đảm bảo đường đi cuối cùng có tổng chi phí nhỏ nhất.
 
 **2. Tìm kiếm có thông tin / Khám phá Heuristic (Informed Search)**
-Sử dụng hàm đánh giá Heuristic $h(n)$ để ước lượng chi phí từ trạng thái hiện tại đến đích, giúp thuật toán "định hướng" và ưu tiên duyệt các nhánh tiềm năng. Trong bài toán không gian lưới, hàm Heuristic thường được sử dụng là khoảng cách Manhattan.
-- **Greedy Best-First Search**: Luôn ưu tiên mở rộng node có giá trị $h(n)$ nhỏ nhất. Thuật toán này tìm đến đích rất nhanh nhưng thường bỏ lỡ các đường đi tối ưu thực sự.
-- **A\* Search**: Khắc phục nhược điểm của Greedy bằng cách dùng hàm đánh giá $f(n) = g(n) + h(n)$ (tổng chi phí thực tế + chi phí ước lượng). A* cân bằng tốt giữa tốc độ và tính chính xác, luôn đảm bảo tìm được đường đi tối ưu nhất (với điều kiện hàm Heuristic thỏa mãn tính chấp nhận được - Admissible).
+Sử dụng hàm đánh giá Heuristic h(n) để ước lượng chi phí từ trạng thái hiện tại đến đích, giúp thuật toán "định hướng" và ưu tiên duyệt các nhánh tiềm năng. Trong bài toán không gian lưới, hàm Heuristic thường được sử dụng là khoảng cách Manhattan.
+- **Greedy Best-First Search**: Luôn ưu tiên mở rộng node có giá trị h(n) nhỏ nhất. Thuật toán này tìm đến đích rất nhanh nhưng thường bỏ lỡ các đường đi tối ưu thực sự.
+- **A\* Search**: Khắc phục nhược điểm của Greedy bằng cách dùng hàm đánh giá f(n) = g(n) + h(n) (tổng chi phí thực tế + chi phí ước lượng). A* cân bằng tốt giữa tốc độ và tính chính xác, luôn đảm bảo tìm được đường đi tối ưu nhất (với điều kiện hàm Heuristic thỏa mãn tính chấp nhận được - Admissible).
 
 **3. Tìm kiếm cục bộ (Local Search)**
 Thay vì lưu trữ toàn bộ cây tìm kiếm (rất hao phí tài nguyên đối với các bài toán không gian lớn), hướng tiếp cận này chỉ duy trì trạng thái hiện tại và nỗ lực di chuyển sang các trạng thái lân cận có giá trị tốt hơn.
 - **Hill Climbing**: Liên tục di chuyển về phía trạng thái lân cận tốt hơn (leo lên đỉnh đồi). Nhược điểm lớn nhất là dễ bị mắc kẹt tại các "cực đại cục bộ" (Local Maxima) mà không thể tiếp cận cực đại toàn cục.
-- **Simulated Annealing (Luyện kim sa)**: Đưa yếu tố ngẫu nhiên vào để "thoát" khỏi cực đại cục bộ. Ở giai đoạn đầu, thuật toán sẵn sàng chấp nhận các trạng thái tồi hơn với xác suất cao, sau đó xác suất này giảm dần theo "nhiệt độ" (Temperature) giống hệt như quá trình làm nguội kim loại.
-- **Local Beam Search**: Theo dõi đồng thời $k$ trạng thái tốt nhất thay vì chỉ 1 trạng thái. Tại mỗi bước lặp, thuật toán tạo ra tất cả các trạng thái lân cận của $k$ trạng thái này, đánh giá và chọn lọc ra đúng $k$ trạng thái ưu tú nhất để tiếp tục.
+- **Simulated Annealing (Luyện kim)**: Đưa yếu tố ngẫu nhiên vào để thoát khỏi cực đại cục bộ. Ở giai đoạn đầu, thuật toán sẵn sàng chấp nhận các trạng thái tồi hơn với xác suất cao, sau đó xác suất này giảm dần theo "nhiệt độ" (Temperature) giống hệt như quá trình làm nguội kim loại.
+- **Local Beam Search**: Theo dõi đồng thời k trạng thái tốt nhất thay vì chỉ 1 trạng thái. Tại mỗi bước lặp, thuật toán tạo ra tất cả các trạng thái lân cận của k trạng thái này, đánh giá và chọn lọc ra đúng k trạng thái tốt nhất để tiếp tục.
 
 **4. Khám phá trong môi trường phức tạp (Complex Environments / Nondeterministic)**
 Xử lý bài toán trong môi trường không xác định, nơi một tác động có thể dẫn đến nhiều hệ quả ngẫu nhiên khác nhau.
@@ -72,7 +72,7 @@ Giải quyết bài toán tô màu bản đồ tỉnh Tiền Giang. Mục tiêu 
 **6. Adversarial Search**
 Xây dựng AI đánh Cờ Caro. Khác biệt cốt lõi so với các bài toán một Agent là sự cạnh tranh khốc liệt giữa 2 người chơi (AI và con người), nơi hành động của đối thủ sẽ ảnh hưởng trực tiếp đến không gian trạng thái của mình.
 - **Minimax**: Thuật toán duyệt cây trò chơi (Game tree). Nó giả định người chơi AI (đóng vai Max) luôn nỗ lực tối đa hóa điểm số, trong khi con người (đóng vai Min) luôn nỗ lực tối thiểu hóa điểm số của AI. Thuật toán sẽ tính toán ngược từ dưới lên để tìm ra nước đi an toàn nhất dựa trên giả định cả hai bên đều đánh tối ưu.
-- **Alpha-Beta Pruning (Tỉa nhánh Alpha-Beta)**: Là bản nâng cấp hoàn hảo của Minimax. Bằng cách duy trì 2 ranh giới cận $\alpha$ và $\beta$, thuật toán nhận diện và "cắt tỉa" (loại bỏ) những nhánh không có khả năng mang lại kết quả tốt hơn những gì đã khám phá. Điều này giúp cắt giảm hàng triệu phép tính toán vô ích mà vẫn bảo toàn 100% tính chính xác của Minimax.
+- **Alpha-Beta Pruning (Tỉa nhánh Alpha-Beta)**: Là bản nâng cấp hoàn hảo của Minimax. Bằng cách duy trì 2 ranh giới cận alpha và beta, thuật toán nhận diện và cắt tỉa (loại bỏ) những nhánh không có khả năng mang lại kết quả tốt hơn những gì đã khám phá. Điều này giúp cắt giảm hàng triệu phép tính toán vô ích mà vẫn bảo toàn 100% tính chính xác của Minimax.
 
 > **Minh họa thuật toán Đối kháng (Game Caro):**
 > <!-- ⬇️ BẠN HÃY CHÈN LINK ẢNH GIF MINH HỌA THUẬT TOÁN ADVERSARIAL VÀO DÒNG BÊN DƯỚI ⬇️ -->
@@ -80,7 +80,7 @@ Xây dựng AI đánh Cờ Caro. Khác biệt cốt lõi so với các bài toá
 
 ## 4. Tính năng nổi bật
 - **Giao diện trực quan & Animation (Clean UI)**: Hệ thống sử dụng các thư viện UI (Tkinter, Pygame, OpenCV) mang đến không gian tương tác hiện đại. Animation chuyển động mượt mà giúp người xem dễ dàng bám sát quá trình xử lý của thuật toán.
-- **Trace Step-by-step Debugger**: Khả năng dừng/chạy từng bước. Giao diện tự động in log và thống kê chi tiết chi phí, cấu trúc node, rất thích hợp để sinh viên đối chiếu với quá trình dò thuật toán trên giấy.
+- **Trace Step-by-step Debugger**: Khả năng dừng/chạy từng bước. Giao diện tự động in log và thống kê chi tiết chi phí, cấu trúc node, rất thích hợp để đối chiếu với quá trình dò thuật toán trên giấy.
 - **Tương tác trực tiếp qua Notebook**: Tận dụng Jupyter Notebook cho các bài toán nâng cao (Cờ Caro, Tô màu) kết hợp Widget. Vừa cung cấp một môi trường giải thích code thân thiện, vừa hỗ trợ khả năng "Play" và thử nghiệm trực tiếp ngay trong khối lệnh.
 - **Đa dạng môi trường AI**: Trải dài từ các mô phỏng một tác tử (Single Agent) xử lý bài toán tuyến tính, đến các bài toán đối kháng đa luồng tư duy phức tạp.
 
@@ -101,7 +101,7 @@ Xây dựng AI đánh Cờ Caro. Khác biệt cốt lõi so với các bài toá
        ```
 
 ## 6. Hướng dẫn sử dụng chung
-- **Đối với Đồ án `vacuum_ai_projects`**: 
+- **Đối với Dự án `vacuum_ai_projects`**: 
   - Mở terminal tại thư mục này và khởi chạy lệnh `python main.py`. 
   - Tùy chỉnh tham số Map và chọn 1 trong 4 nhóm thuật toán tìm kiếm cơ bản để quan sát mô phỏng.
 - **Đối với bài toán `coloring_map_tiengiang.ipynb`**: 
