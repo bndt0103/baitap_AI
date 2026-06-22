@@ -65,8 +65,8 @@ Giải quyết bài toán tô màu bản đồ tỉnh Tiền Giang. Mục tiêu 
 - **Min-Conflicts**: Một biến thể của tìm kiếm cục bộ áp dụng cho CSP. Thuật toán khởi đầu bằng việc gán ngẫu nhiên màu cho toàn bộ bản đồ (chấp nhận có lỗi vi phạm), sau đó liên tục khoanh vùng các huyện đang vi phạm ràng buộc và đổi màu của chúng sang màu gây ra ít xung đột nhất với các vùng xung quanh.
 
 > **Minh họa thuật toán CSP (Tô màu bản đồ):**
-> <!-- ⬇️ BẠN HÃY CHÈN LINK ẢNH GIF MINH HỌA THUẬT TOÁN CSP VÀO DÒNG BÊN DƯỚI ⬇️ -->
-> `[Chèn ảnh GIF minh họa quá trình chạy CSP tại đây]`
+<img width="1918" height="1018" alt="coloring_map_tiengiang" src="https://github.com/user-attachments/assets/381c084a-49b2-4b23-a2ee-25b2fdaef41b" />
+
 
 ### 🌟 Nhóm 6: Tìm kiếm đối kháng (Tích hợp trong `caro_game.ipynb`)
 **6. Adversarial Search**
@@ -75,8 +75,8 @@ Xây dựng AI đánh Cờ Caro. Khác biệt cốt lõi so với các bài toá
 - **Alpha-Beta Pruning (Tỉa nhánh Alpha-Beta)**: Là bản nâng cấp hoàn hảo của Minimax. Bằng cách duy trì 2 ranh giới cận alpha và beta, thuật toán nhận diện và cắt tỉa (loại bỏ) những nhánh không có khả năng mang lại kết quả tốt hơn những gì đã khám phá. Điều này giúp cắt giảm hàng triệu phép tính toán vô ích mà vẫn bảo toàn 100% tính chính xác của Minimax.
 
 > **Minh họa thuật toán Đối kháng (Game Caro):**
-> <!-- ⬇️ BẠN HÃY CHÈN LINK ẢNH GIF MINH HỌA THUẬT TOÁN ADVERSARIAL VÀO DÒNG BÊN DƯỚI ⬇️ -->
-> `[Chèn ảnh GIF minh họa gameplay Caro/Adversarial tại đây]`
+<img width="96" height="150" alt="caro_game" src="https://github.com/user-attachments/assets/db9af97b-e31a-4239-b03c-a6d3e3a9cde7" />
+
 
 ## 4. Tính năng nổi bật
 - **Giao diện trực quan & Animation (Clean UI)**: Hệ thống sử dụng các thư viện UI (Tkinter, Pygame, OpenCV) mang đến không gian tương tác hiện đại. Animation chuyển động mượt mà giúp người xem dễ dàng bám sát quá trình xử lý của thuật toán.
